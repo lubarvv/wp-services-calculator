@@ -1,0 +1,16 @@
+.WSC_adminTable {
+    width: 100%;
+}
+
+.WSC_adminTable td {
+    background: #e0e0e0;
+    padding: 2px 5px;
+}
+
+.WSC_adminTableHead {
+    font-weight: 800;
+}
+
+.WSC_adminTableHead td {
+    background: #b0b0b0;
+}

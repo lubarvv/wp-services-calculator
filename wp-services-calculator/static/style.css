@@ -1,0 +1,71 @@
+.hidden {
+    display: none;
+}
+
+#WSC_resultInfo {
+    background: #f0f0f0;
+    border: 1px solid #777777;
+    border-bottom: none;
+    padding: 10px;
+}
+
+#WSC_container {
+    background: #f0f0f0;
+    border: 1px solid #777777;
+    min-height: 500px;
+    position: relative;
+}
+
+#WSC_sections {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 100%;
+    background: #e0e0e0;
+    border-right: 1px solid #999999;
+}
+
+.WSC_section {
+    padding: 3px;
+    font-size: 12px;
+    background: #aaaaff;
+    margin: 3px;
+    cursor: pointer;
+}
+
+.WSC_section:hover {
+    background: #aaffaa;
+    color: red;
+    font-weight: 800;
+}
+
+#WSC_sectionsContent {
+    margin-left: 150px;
+}
+
+.WSC_sectionCategory {
+    border: 1px solid #5555ff;
+    background: #ccccff;
+    margin: 5px;
+}
+
+.WSC_sectionCategoryTitle {
+    background: #9090ff;
+    padding: 5px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.WSC_sectionCategoryServices {
+    border-top: 1px solid #5555ff;
+    padding: 5px;
+    display: none;
+}
+
+.WSC_service {
+    background: #aaffcc;
+    border: 1px solid red;
+    padding: 5px;
+    margin: 5px;
+}
