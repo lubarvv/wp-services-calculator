@@ -6,8 +6,7 @@ WSC_calc = {
         jQuery('.WSC_section').click(WSC_calc.showSectionContent);
         jQuery('.WSC_sectionCategoryTitle').click(WSC_calc.toggleCategoryServices);
         jQuery('.WSC_serviceCheck').click(WSC_calc.checkServiceHandler);
-        jQuery('.WSC_serviceCount').bind('change, keyup', WSC_calc.checkService);
-        jQuery('.WSC_serviceCount').bind('change, keyup', WSC_calc.checkServiceHandler);
+        jQuery('.WSC_serviceCount').bind('change, keyup', WSC_calc.checkService).bind('change, keyup', WSC_calc.checkServiceHandler);
     },
 
     showSectionContent: function() {
@@ -22,11 +21,11 @@ WSC_calc = {
         WSC_calc.currentSum = 0;
 
         jQuery('.WSC_serviceCheck:checked').each(function() {
-            cost = parseInt(jQuery(this).parent('.WSC_service').children('.WSC_serviceCostValue').val());
-            many = parseInt(jQuery(this).parent('.WSC_service').children('.WSC_serviceManyValue').val());
+            cost = parseInt(jQuery(this).parent('.wrap_checkbox').children('.WSC_serviceCostValue').val());
+            many = parseInt(jQuery(this).parent('.wrap_checkbox').children('.WSC_serviceManyValue').val());
 
             if(many) {
-                count = jQuery(this).parent('.WSC_service').children('.WSC_serviceCount').val();
+                count = jQuery(this).parent('.wrap_checkbox').parent('.WSC_service').children('.wrap_many').children('.WSC_serviceCount').val();
                 WSC_calc.currentSum += cost * count;
             } else {
                 WSC_calc.currentSum += cost;
@@ -37,11 +36,11 @@ WSC_calc = {
     },
 
     checkService: function() {
-        jQuery(this).parent('.WSC_service').children('.WSC_serviceCheck').attr('checked', 'checked');
+        jQuery(this).parent('.wrap_many').parent('.WSC_service').children('.wrap_checkbox').children('.WSC_serviceCheck').attr('checked', 'checked');
     },
 
     toggleCategoryServices: function() {
-        jQuery(this).parent('.WSC_sectionCategory').children('.WSC_sectionCategoryServices').slideToggle(300);
+        jQuery(this).parent('.WSC_sectionCategory').toggleClass('WSC_sectionCategory_active').children('.WSC_sectionCategoryServices').slideToggle(300);
     },
 
     binds: function() {
