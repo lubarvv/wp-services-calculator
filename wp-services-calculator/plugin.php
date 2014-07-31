@@ -54,9 +54,9 @@ class Plugin
                             <div class="WSC_sectionCategory">
 
                                 <div class="WSC_sectionCategoryTitle">
-                                    <span><?php echo $category['name']; ?></span>
+                                    <div class="WSC_sectionCategoryName"><?php echo $category['name']; ?></div>
 
-                                    <p><?php echo $category['description']; ?></p>
+                                    <div class="WSC_sectionCategoryDesc"><?php echo $category['description']; ?></div>
                                 </div>
 
                                 <div class="WSC_sectionCategoryServices">
