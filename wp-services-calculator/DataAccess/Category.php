@@ -16,11 +16,21 @@ class Category
     /**
      * Возвращает катгорию по id
      * @param $id
+     * @param $deleted
      * @return array
      */
-    public static function get($id)
+    public static function get($id, $deleted = false)
     {
+        $id = (int)$id;
 
+        global $wpdb;
+
+        $delWhere = 'AND deleted=0';
+        if($deleted)
+            $delWhere = '';
+
+        $sql = "SELECT * FROM {$wpdb->prefix}_WSC_categories WHERE id={$id} {$delWhere}";
+        return $wpdb->get_row($sql, ARRAY_A);
     }
 
 
@@ -42,11 +52,16 @@ class Category
 
     /**
      * Возвращает все категории
+     * @param $deleted
      * @return array
      */
-    public static function getAll()
+    public static function getAll($deleted = false)
     {
         global $wpdb;
+
+        $delWhere = 'AND cat.deleted=0';
+        if($deleted)
+            $delWhere = '';
 
         $sql = "
             SELECT
@@ -58,6 +73,8 @@ class Category
                 JOIN {$wpdb->prefix}_WSC_sections AS sec
                 ON sec.id = cat.section_id
 
+            {$delWhere}
+
             ORDER BY name
         ";
 
@@ -68,9 +85,16 @@ class Category
     /**
      * Сохраняет категорию
      */
-    public static function save()
+    public static function save($id, $name, $description)
     {
+        $id = (int)$id;
+        $name = mysql_real_escape_string($name);
+        $description = mysql_real_escape_string($description);
 
+        global $wpdb;
+
+        $sql = "UPDATE {$wpdb->prefix}_WSC_categories SET name='{$name}', description='{$description}' WHERE id={$id}";
+        $wpdb->query($sql);
     }
 
 
@@ -89,6 +113,35 @@ class Category
         global $wpdb;
 
         $sql = "INSERT INTO {$wpdb->prefix}_WSC_categories (section_id, name, description) VALUES ({$section_id}, '{$name}', '{$description}')";
+        $wpdb->query($sql);
+    }
+
+    /**
+     * Удаляет категорию по переданному id
+     * @param $id
+     */
+    public static function delete($id)
+    {
+        $id = (int)$id;
+
+        global $wpdb;
+
+        $sql = "UPDATE {$wpdb->prefix}_WSC_categories SET deleted=1 WHERE id={$id}";
+        $wpdb->query($sql);
+    }
+
+
+    /**
+     * Восстанавливает категорию по переданному id
+     * @param $id
+     */
+    public static function restore($id)
+    {
+        $id = (int)$id;
+
+        global $wpdb;
+
+        $sql = "UPDATE {$wpdb->prefix}_WSC_categories SET deleted=0 WHERE id={$id}";
         $wpdb->query($sql);
     }
 }

@@ -18,9 +18,18 @@ class Service
      * @param $id
      * @return array
      */
-    public static function get($id)
+    public static function get($id, $deleted = false)
     {
+        $id = (int)$id;
 
+        global $wpdb;
+
+        $delWhere = 'AND deleted=0';
+        if($deleted)
+            $delWhere = '';
+
+        $sql = "SELECT * FROM {$wpdb->prefix}_WSC_services WHERE id={$id} {$delWhere}";
+        return $wpdb->get_row($sql, ARRAY_A);
     }
 
 
@@ -41,11 +50,16 @@ class Service
 
     /**
      * Возвращает все услуги
+     * @param $deleted
      * @return array
      */
-    public static function getAll()
+    public static function getAll($deleted = false)
     {
         global $wpdb;
+
+        $delWhere = 'WHERE services.deleted=0';
+        if($deleted)
+            $delWhere = '';
 
         $sql = "
             SELECT
@@ -58,6 +72,9 @@ class Service
                 ON sections.id = services.section_id
                 LEFT JOIN {$wpdb->prefix}_WSC_categories AS categories
                 ON categories.id = services.category_id
+
+            {$delWhere}
+
             ORDER BY
                 section_name,
                 category_name,
@@ -71,9 +88,34 @@ class Service
     /**
      * Сохраняет услугу
      */
-    public static function save()
+    public static function save($id, $section_id, $category_id, $name, $description, $cost, $many, $maxCount)
     {
+        $id = (int)$id;
+        $section_id = (int)$section_id;
+        $category_id = (int)$category_id;
+        $name = mysql_real_escape_string($name);
+        $description = mysql_real_escape_string($description);
+        $cost = (int)$cost;
+        $many = (int)$many;
+        $maxCount = (int)$maxCount;
 
+        global $wpdb;
+
+        $sql = "
+            UPDATE {$wpdb->prefix}_WSC_services
+            SET
+                section_id = {$section_id},
+                category_id = {$category_id},
+                name = '{$name}',
+                description = '{$description}',
+                cost = {$cost},
+                many = {$many},
+                maxCount = {$maxCount}
+
+            WHERE
+                id={$id}
+        ";
+        $wpdb->query($sql);
     }
 
 
@@ -97,6 +139,35 @@ class Service
             VALUES ({$section_id}, {$category_id}, '{$name}', '{$description}', {$cost}, {$many}, {$maxCount})
         ";
 
+        $wpdb->query($sql);
+    }
+
+    /**
+     * Удаляет услугу по переданному id
+     * @param $id
+     */
+    public static function delete($id)
+    {
+        $id = (int)$id;
+
+        global $wpdb;
+
+        $sql = "UPDATE {$wpdb->prefix}_WSC_services SET deleted=1 WHERE id={$id}";
+        $wpdb->query($sql);
+    }
+
+
+    /**
+     * Восстанавливает услугу по переданному id
+     * @param $id
+     */
+    public static function restore($id)
+    {
+        $id = (int)$id;
+
+        global $wpdb;
+
+        $sql = "UPDATE {$wpdb->prefix}_WSC_services SET deleted=0 WHERE id={$id}";
         $wpdb->query($sql);
     }
 }
