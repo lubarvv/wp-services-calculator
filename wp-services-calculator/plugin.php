@@ -101,4 +101,49 @@ class Plugin
         </div>
     <?php
     }
+
+
+    /**
+     * Создание таблиц при активации плагина
+     */
+    public static function activate()
+    {
+        global $wpdb;
+
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDelta("
+            CREATE TABLE IF NOT EXISTS {$wpdb->prefix}_WSC_services (
+                  id int(1) NOT NULL AUTO_INCREMENT,
+                  section_id int(1) DEFAULT NULL,
+                  category_id int(1) DEFAULT NULL,
+                  name varchar(250) NOT NULL,
+                  description text,
+                  cost int(1) NOT NULL,
+                  maxCount int(1) DEFAULT NULL,
+                  many int(1) DEFAULT NULL,
+                  deleted tinyint(1) NOT NULL DEFAULT '0',
+                  PRIMARY KEY (id)
+            ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+        ");
+
+        dbDelta("
+            CREATE TABLE IF NOT EXISTS {$wpdb->prefix}_WSC_sections (
+                  id int(1) NOT NULL AUTO_INCREMENT,
+                  name varchar(250) NOT NULL,
+                  deleted tinyint(1) NOT NULL DEFAULT '0',
+                  PRIMARY KEY (id)
+            ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+        ");
+
+        dbDelta("
+            CREATE TABLE IF NOT EXISTS {$wpdb->prefix}_WSC_categories (
+                  id int(1) NOT NULL AUTO_INCREMENT,
+                  section_id int(1) NOT NULL,
+                  description text,
+                  name varchar(250) NOT NULL,
+                  deleted tinyint(1) NOT NULL DEFAULT '0',
+                  PRIMARY KEY (id)
+            ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+        ");
+    }
 }

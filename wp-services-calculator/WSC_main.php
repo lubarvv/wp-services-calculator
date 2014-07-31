@@ -58,6 +58,12 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'plugin.php';
 
 wp_enqueue_style('style', '/wp-content/plugins/wp-services-calculator/static/style.css', false, '0.1');
 
+function activation()
+{
+    \WSC\Plugin::activate();
+}
+register_activation_hook(__FILE__, 'activation');
+
 /**
  * Добавляем страницы администрирования плагина
  */
