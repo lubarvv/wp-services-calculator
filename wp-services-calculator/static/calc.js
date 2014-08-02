@@ -33,6 +33,8 @@ WSC_calc = {
         });
 
         jQuery('#WSC_sum').html(WSC_calc.currentSum);
+
+        WSC_calc.refreshOrderInfo();
     },
 
     checkService: function() {
@@ -43,8 +45,90 @@ WSC_calc = {
         jQuery(this).parent('.WSC_sectionCategory').toggleClass('WSC_sectionCategory_active').children('.WSC_sectionCategoryServices').slideToggle(300);
     },
 
-    binds: function() {
+    refreshOrderInfo: function() {
+        var orderDescription = 'Выбрано услуг на сумму ' + WSC_calc.currentSum + ' рублей: \n\n';
 
+        jQuery('.WSC_sectionContent').each(function(){
+            var sectionName = jQuery(this).attr('data-name');
+            jQuery('.WSC_sectionCategory', this).each(function(){
+                var categoryName = jQuery(this).attr('data-name');
+                jQuery('.WSC_serviceCheck:checked', this).each(function(){
+                    var service = jQuery(this).parents('.WSC_service');
+                    var serviceName = jQuery(service).attr('data-name');
+                    var serviceCost = jQuery(service).attr('data-cost');
+
+                    var count = parseInt(jQuery('.WSC_serviceCount', service).val());
+                    var cost;
+                    if(count > 0) {
+                        cost = serviceCost + ' руб/шт * ' + count + ' шт = ' + serviceCost * count + 'руб';
+                    } else {
+                        cost = serviceCost + ' руб'
+                    }
+
+                    orderDescription += sectionName + ' >> ' + categoryName + ' >> ' + serviceName + ' - ' + cost + '\n';
+                });
+            });
+        });
+
+        jQuery('#WSC_orderDescription').html(orderDescription);
+    },
+
+    sendOrderForm: function() {
+        var name = jQuery('#WSC_orderName').val();
+        var phone = jQuery('#WSC_orderPhone').val();
+        var comment = jQuery('#WSC_orderComment').val();
+
+        if(name.length == 0) {
+            alert('Введите Ваше имя');
+            return;
+        }
+
+        if(phone.length == 0) {
+            alert('Введите номер телефона');
+            return;
+        }
+
+        jQuery.post(
+            '/wp-admin/admin-ajax.php',
+            {
+                action: 'createOrder',
+                name: name,
+                phone: phone,
+                comment: comment,
+                description: jQuery('#WSC_orderDescription').html()
+            },
+            function() {
+                jQuery('#WSC_order').dialog('close');
+
+                jQuery('#WSC_orderName').val('');
+                jQuery('#WSC_orderPhone').val('');
+                jQuery('#WSC_orderComment').val('');
+                jQuery('#WSC_orderDescription').html('');
+
+                jQuery('.WSC_serviceCheck').removeAttr('checked');
+
+                WSC_calc.checkServiceHandler();
+
+                alert('Заказ принят, с Вами свяжутся по указанному телефону.');
+            },
+            'text'
+        );
+    },
+
+
+    showOrderForm: function() {
+        if(jQuery('.WSC_serviceCheck:checked').length == 0) {
+            alert('Выберите услуги для заказа!');
+            return false;
+        }
+
+        jQuery('#WSC_order').dialog({
+            modal: true,
+            movable: false,
+            resizable: false,
+            width: 800,
+            title: 'Оформление заказа'
+        });
     }
 };
 

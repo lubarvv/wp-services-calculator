@@ -56,28 +56,23 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'logic' . DIRECTORY_SEPAR
  */
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'plugin.php';
 
+/**
+ *
+ */
 wp_enqueue_style('style', '/wp-content/plugins/wp-services-calculator/static/style.css', false, '0.1');
 
-function activation()
-{
-    \WSC\Plugin::activate();
-}
-register_activation_hook(__FILE__, 'activation');
+/**
+ * Вешаем обработчик на активацию плагина
+ */
+register_activation_hook(__FILE__, '\WSC\Plugin::activate');
 
 /**
  * Добавляем страницы администрирования плагина
  */
-add_action('admin_menu', 'WSC_add_admin_pages');
+add_action('admin_menu', '\WSC\Logic\Admin::addAdminPages');
 
 /**
- * Функция добавляет ссылки для администрирования плагина в админское меню вордпресса
+ * Добавление обработчика на ajax-запрос создания заказа
  */
-function WSC_add_admin_pages()
-{
-    wp_enqueue_style('admin-style', '/wp-content/plugins/wp-services-calculator/static/admin-style.css', false, '0.1');
-
-    add_menu_page('Калькулятор', 'Калькулятор', 8, __FILE__, '\WSC\Logic\Admin::main');
-    add_submenu_page(__FILE__, 'Разделы', 'Разделы', 8, 'sections', '\WSC\Logic\Admin::sections');
-    add_submenu_page(__FILE__, 'Категории', 'Категории', 8, 'categories', '\WSC\Logic\Admin::categories');
-    add_submenu_page(__FILE__, 'Услуги', 'Услуги', 8, 'services', '\WSC\Logic\Admin::services');
-}
+add_action('wp_ajax_createOrder', '\WSC\Logic\Admin::createOrder');
+add_action('wp_ajax_nopriv_createOrder', '\WSC\Logic\Admin::createOrder');

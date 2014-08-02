@@ -25,7 +25,7 @@ class Admin
      */
     public static function main()
     {
-        echo 'test';
+        AdminView::orders();
     }
 
 
@@ -241,6 +241,47 @@ class Admin
      */
     public static function ordersMain()
     {
+    }
+
+
+    /**
+     * Создает заказ
+     */
+    public static function createOrder()
+    {
+        Order::add($_POST['name'], $_POST['phone'], $_POST['comment'], $_POST['description']);
+        wp_mail(
+            get_option('admin_email'),
+            'Оформлен новый заказ',
+            "
+                <h2>Оформлен новый заказ</h2>
+
+                <b>ФИО клиента:</b> {$_POST['name']} <br />
+                <b>Телефон клиента:</b> {$_POST['phone']}<br/><br/>
+
+                <b>Комментарий клиента:</b><br />
+                <pre>{$_POST['comment']}</pre>
+
+                <b>Описание заказа:</b><br/>
+                <pre>{$_POST['description']}</pre>
+            ",
+            'content-type: text/html'
+        );
+        die('good');
+    }
+
+
+    /**
+     * Добавляет ссылки для администрирования плагина в админское меню вордпресса
+     */
+    function addAdminPages()
+    {
+        wp_enqueue_style('admin-style', '/wp-content/plugins/wp-services-calculator/static/admin-style.css', false, '0.1');
+
+        add_menu_page('Калькулятор', 'Калькулятор', 8, __FILE__, '\WSC\Logic\Admin::main');
+        add_submenu_page(__FILE__, 'Разделы', 'Разделы', 8, 'sections', '\WSC\Logic\Admin::sections');
+        add_submenu_page(__FILE__, 'Категории', 'Категории', 8, 'categories', '\WSC\Logic\Admin::categories');
+        add_submenu_page(__FILE__, 'Услуги', 'Услуги', 8, 'services', '\WSC\Logic\Admin::services');
     }
 
 }

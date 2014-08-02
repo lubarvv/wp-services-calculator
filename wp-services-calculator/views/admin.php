@@ -319,4 +319,38 @@ class Admin
             </form>
         <?php
     }
+
+
+    /**
+     * Вывод списка заказов
+     */
+    public static function orders()
+    {
+        ?>
+            <h2>Оформленные заказы</h2>
+            <table class="WSC_adminTable">
+                <tr class="WSC_adminTableHead">
+                    <td>#</td>
+                    <td>Контактные данные</td>
+                    <td>Комментарий клиента</td>
+                    <td>Заказ</td>
+                </tr>
+                <?php foreach(Order::getAll() as $order): ?>
+                    <tr>
+                        <td><?php echo $order['id']; ?></td>
+                        <td>
+                            <?php echo $order['name']; ?><br />
+                            <?php echo $order['phone']; ?>
+                        </td>
+                        <td>
+                            <?php echo $order['comment']; ?>
+                        </td>
+                        <td>
+                            <pre><?php echo $order['description']; ?></pre>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        <?php
+    }
 }
