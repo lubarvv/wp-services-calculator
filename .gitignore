@@ -1,2 +1,5 @@
 ..idea/
 netbeans/
+
+exec-php/
+wp-mail-smtp/
