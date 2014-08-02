@@ -65,8 +65,9 @@ class Plugin
                             <div class="WSC_sectionCategory" data-id="<?php echo $category['id']; ?>" data-name="<?php echo $category['name']; ?>">
 
                                 <div class="WSC_sectionCategoryTitle">
-                                    <span><?php echo $category['name']; ?></span>
-                                    <p><?php echo $category['description']; ?></p>
+                                    <div class="WSC_sectionCategoryName"><?php echo $category['name']; ?></div>
+
+                                    <div class="WSC_sectionCategoryDesc"><?php echo $category['description']; ?></div>
                                 </div>
 
                                 <div class="WSC_sectionCategoryServices">

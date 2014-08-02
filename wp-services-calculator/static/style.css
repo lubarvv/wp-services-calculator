@@ -98,6 +98,18 @@
     color: #428bca;
 }
 
+.WSC_sectionCategoryName{
+
+}
+
+.WSC_sectionCategoryDesc{
+    font-size: 14px;
+    padding: 5px;
+    color: #867E7E;
+    font-weight: 100;
+
+}
+
 .WSC_sectionCategoryServices {
 
     display: none;
@@ -150,7 +162,7 @@
 
 .wrap_desc {
     width: 100%;
-    font-size: 12px;
+    font-size: 14px;
     clear: both;
     padding: 5px;
     color:#867E7E;
