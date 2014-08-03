@@ -61,6 +61,14 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'plugin.php';
  */
 wp_enqueue_style('style', '/wp-content/plugins/wp-services-calculator/static/style.css', false, '0.1');
 
+
+/*
+ * jqury-ui + css
+ */
+wp_register_script('jquery-ui', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js', array('jquery') );
+wp_enqueue_script('jquery-ui');
+wp_enqueue_style('jquery-ui', '/wp-content/plugins/wp-services-calculator/static/jquery-ui-dialog.css');
+
 /**
  * Вешаем обработчик на активацию плагина
  */
@@ -76,3 +84,8 @@ add_action('admin_menu', '\WSC\Logic\Admin::addAdminPages');
  */
 add_action('wp_ajax_createOrder', '\WSC\Logic\Admin::createOrder');
 add_action('wp_ajax_nopriv_createOrder', '\WSC\Logic\Admin::createOrder');
+
+/**
+ * Добавляем шорт код, чтобы из контента вызывать без php-exec
+ */
+add_shortcode( 'calc', '\WSC\Plugin::show' );

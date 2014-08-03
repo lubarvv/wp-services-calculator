@@ -98,11 +98,11 @@
     color: #428bca;
 }
 
-.WSC_sectionCategoryName{
+.WSC_sectionCategoryName {
 
 }
 
-.WSC_sectionCategoryDesc{
+.WSC_sectionCategoryDesc {
     font-size: 14px;
     padding: 5px;
     color: #867E7E;
@@ -138,7 +138,7 @@
     min-width: 20%;
     padding: 10px;
     font-size: 12px;
-    color:#867E7E;
+    color: #867E7E;
 }
 
 .wrap_checkbox {
@@ -165,5 +165,89 @@
     font-size: 14px;
     clear: both;
     padding: 5px;
-    color:#867E7E;
+    color: #867E7E;
+}
+
+#WSC_order_form-left {
+    width: 50%;
+    float: left;
+}
+
+#WSC_order_WrapName {
+    width: 100%;
+    padding: 15px;
+}
+
+#WSC_orderName {
+    width: 100%;
+    border-radius: 10px;
+    border: 2px solid #428bca;
+    padding: 10px;
+
+}
+
+#WSC_order_WrapPhone {
+    width: 100%;
+    padding: 15px;
+}
+
+#WSC_orderPhone {
+    width: 100%;
+    border-radius: 10px;
+    border: 2px solid #428bca;
+    padding: 10px;
+
+}
+
+#WSC_order_form-right {
+    width: 50%;
+    float: right;
+    padding: 15px;
+}
+
+#WSC_orderComment {
+    width: 100%;
+    border-radius: 10px;
+    padding: 15px;
+    height: 114px;
+    border: 2px solid #428bca;
+}
+
+#WSC_order_WrapDescription {
+
+}
+
+#WSC_orderDescription {
+    border: 2px solid #428bca;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px;
+    background-color: rgba(79, 143, 140, 0.16);
+}
+
+#WSC_order_button {
+    text-align: center;
+    padding: 15px;
+}
+
+.WSC_form:focus {
+    border: 2px solid #0BBAF1 !important;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 20px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 20px rgba(102, 175, 233, .6);
+}
+
+.btn {
+    width: 150px;
+    height: 45px;
+    background: #428bca;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 0;
+}
+
+.btn:hover{
+    background: #3575AC !important;
+    color:#fff !important;
 }

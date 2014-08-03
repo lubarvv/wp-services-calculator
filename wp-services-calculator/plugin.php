@@ -23,7 +23,7 @@ class Plugin
     {
         $sections = Section::getAll();
 
-        wp_enqueue_script("jquery-ui-dialog", array('jquery','jquery-ui-core'));
+        wp_enqueue_script("jquery-ui-dialog", array('jquery', 'jquery-ui-core'));
         wp_enqueue_style("wp-jquery-ui-dialog");
 
         ?>
@@ -35,11 +35,24 @@ class Plugin
         </div>
 
         <div id="WSC_order" class="hidden">
-            <input type="text" id="WSC_orderName" placeholder="ФИО"/>
-            <input type="text" id="WSC_orderPhone" placeholder="Номер телефона"/>
-            <textarea id="WSC_orderComment" placeholder="Комментарий к заказу"></textarea>
-            <pre id="WSC_orderDescription"></pre>
-            <input type="button" value="Оформить" onclick="WSC_calc.sendOrderForm(); return false;"/>
+            <div id="WSC_order_form-left">
+                <div id="WSC_order_WrapName">
+                    <input class="WSC_form" type="text" id="WSC_orderName" placeholder="ФИО"/>
+                </div>
+                <div id="WSC_order_WrapPhone">
+                    <input class="WSC_form" type="text" id="WSC_orderPhone" placeholder="Номер телефона"/>
+                </div>
+            </div>
+            <div id="WSC_order_form-right">
+                <textarea class="WSC_form" id="WSC_orderComment" placeholder="Комментарий к заказу"></textarea>
+            </div>
+            <div class="clearfix"></div>
+            <div id="WSC_order_WrapDescription">
+                <pre id="WSC_orderDescription"></pre>
+            </div>
+            <div id="WSC_order_button">
+                <input class="btn" type="button" value="Оформить" onclick="WSC_calc.sendOrderForm(); return false;"/>
+            </div>
         </div>
 
         <div id="WSC_container">
@@ -59,10 +72,12 @@ class Plugin
                 </div>
 
                 <?php foreach ($sections as $section): ?>
-                    <div id="WSC_sectionContent_<?php echo $section['id']; ?>" class="WSC_sectionContent hidden" data-id="<?php echo $section['id']; ?>" data-name="<?php echo $section['name']; ?>">
+                    <div id="WSC_sectionContent_<?php echo $section['id']; ?>" class="WSC_sectionContent hidden"
+                         data-id="<?php echo $section['id']; ?>" data-name="<?php echo $section['name']; ?>">
 
                         <?php foreach (Category::getBySection($section['id']) as $category): ?>
-                            <div class="WSC_sectionCategory" data-id="<?php echo $category['id']; ?>" data-name="<?php echo $category['name']; ?>">
+                            <div class="WSC_sectionCategory" data-id="<?php echo $category['id']; ?>"
+                                 data-name="<?php echo $category['name']; ?>">
 
                                 <div class="WSC_sectionCategoryTitle">
                                     <div class="WSC_sectionCategoryName"><?php echo $category['name']; ?></div>
@@ -72,7 +87,8 @@ class Plugin
 
                                 <div class="WSC_sectionCategoryServices">
                                     <?php foreach (Service::getByCategory($category['id']) as $service): ?>
-                                        <div class="WSC_service" data-name="<?php echo $service['name']; ?>" data-cost="<?php echo $service['cost']; ?>">
+                                        <div class="WSC_service" data-name="<?php echo $service['name']; ?>"
+                                             data-cost="<?php echo $service['cost']; ?>">
                                             <div class="wrap_name pull-left"><?php echo $service['name']; ?></div>
                                             <div class="wrap_available pull-left">
                                                 <?php if ($service['many']): ?>
@@ -85,8 +101,10 @@ class Plugin
 
                                             <div class="wrap_checkbox pull-right">
                                                 <input type="checkbox" class="WSC_serviceCheck"/>
-                                                <input type="hidden" class="WSC_serviceCostValue" value="<?php echo $service['cost']; ?>"/>
-                                                <input type="hidden" class="WSC_serviceManyValue" value="<?php echo $service['many']; ?>"/>
+                                                <input type="hidden" class="WSC_serviceCostValue"
+                                                       value="<?php echo $service['cost']; ?>"/>
+                                                <input type="hidden" class="WSC_serviceManyValue"
+                                                       value="<?php echo $service['many']; ?>"/>
                                             </div>
 
                                             <div class="wrap_many pull-right">

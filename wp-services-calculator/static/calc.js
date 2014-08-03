@@ -98,7 +98,7 @@ WSC_calc = {
                 description: jQuery('#WSC_orderDescription').html()
             },
             function() {
-                jQuery('#WSC_order').dialog('close');
+                jQuery('#WSC_order').addClass('hidden').dialog('close');
 
                 jQuery('#WSC_orderName').val('');
                 jQuery('#WSC_orderPhone').val('');
@@ -122,7 +122,7 @@ WSC_calc = {
             return false;
         }
 
-        jQuery('#WSC_order').dialog({
+        jQuery('#WSC_order').removeClass('hidden').dialog({
             modal: true,
             movable: false,
             resizable: false,
